@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 import logging
 
-
 class RsInput:
     '''
     #设置线程或者进程输入

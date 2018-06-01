@@ -90,7 +90,7 @@ def MultiTest(multiNum,samefile,host,appid,appsecret,type = True):
         return multiNum,multiTotalTime,data_statistics
     except:
         logging.error('MultiTest')
-        return 0,0.0,dataStatistics()
+        return 0,0.0,vStatisticsData()
 
 def BatchMultiTest(vSampleList,host,appid,appsecret,type = True):
     '''
@@ -158,8 +158,6 @@ def writeExcelReports(TestResult,excelpath='./TestResult'):
     :return:
     '''
     try:
-        data_statistics = vStatisticsData()
-
         dictLetter = list(string.ascii_uppercase)
         vMultiNum = readConfFile()
         setDataList = [u'并发数',u'总耗时',u'请求检测成功率',u'请求识别成功率',u'成功检测请求平均响应耗时',u'成功识别请求平均响应耗时']
@@ -184,10 +182,10 @@ def writeExcelReports(TestResult,excelpath='./TestResult'):
             sheet.cell(row=k + 3, column=2,value= data[0])
             sheet.cell(row=k + 3, column=3, value=data[1])
 
-            sheet.cell(row=k + 3, column= 4, value=data_statistics.dete.getSucccessRate() )
-            sheet.cell(row=k + 3, column= 5, value=data_statistics.recogntion.getSucccessRate() )
-            sheet.cell(row=k + 3, column= 6, value=data_statistics.dete.getAverageTime())
-            sheet.cell(row=k + 3, column= 7, value=data_statistics.recogntion.getAverageTime())
+            sheet.cell(row=k + 3, column= 4, value=data[2].dete.getSucccessRate() )
+            sheet.cell(row=k + 3, column= 5, value=data[2].recogntion.getSucccessRate() )
+            sheet.cell(row=k + 3, column= 6, value=data[2].dete.getAverageTime())
+            sheet.cell(row=k + 3, column= 7, value=data[2].recogntion.getAverageTime())
 
         outInfo = u'请求检测成功率:成功检测次数/请求检测总次数\n'
         outInfo += u'请求识别成功率:成功识别次数/请求识别总次数\n'

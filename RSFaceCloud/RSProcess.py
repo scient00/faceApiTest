@@ -49,7 +49,11 @@ class RsFaceProcesses(Process):
                         outResult = self.__rsFace.identification(faceId, person_id)
 
                         outResult = self.__rsFace.createGroups(person_id, 'RsGroups'+str(time.time()))
-                        groupsId = outResult[0]['group_id']
+                        if outResult != None and outResult[0]['status'] == 'ok':
+                            groupsId = outResult[0]['group_id']
+                        else:
+                            continue
+
                         outResult = self.__rsFace.deleteGroups(groupsId)
 
                         outResult = self.__rsFace.imageIdentification(filepath, groupsId)
