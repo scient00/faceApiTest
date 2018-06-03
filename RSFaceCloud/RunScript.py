@@ -164,7 +164,7 @@ def writeExcelReports(TestResult,excelpath='./TestResult'):
         if not os.path.exists(excelpath):
             os.makedirs(excelpath)
 
-        excelfile = excelpath + os.path.sep + str(datetime.datetime.now().date()) + '_TestResult.xlsx'
+        excelfile = excelpath + os.path.sep + str(datetime.datetime.now().date()) + '-'+str(datetime.datetime.now().hour) +'-'+ str(datetime.datetime.now().minute)+ '-'+str(datetime.datetime.now().second)  + '_TestResult.xlsx'
         wb = Workbook()
         sheet = wb.active
         sheet.title = u'检测与识别'
@@ -204,6 +204,7 @@ def TestExample(host,appid,appsecret):
     #接口调用示例
     '''
     try:
+
         RsFace = RSFace(host, appid, appsecret)
         result = RsFace.detect('test.jpg')
         face_id = result[0]['faces'][0]['face_id']
@@ -252,7 +253,8 @@ def TestExample(host,appid,appsecret):
 
         result = RsFace.identification(face_id, person_id)
         print('identification', result)
-    except:
+    except Exception as ex:
+        logging.exception(ex)
         logging.error('TestExample')
 
 
