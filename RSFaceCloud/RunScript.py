@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-import logging,datetime,sys,os,shutil,yaml,string
+import logging,sys,os,shutil,yaml,string
 from openpyxl import *
 from RSFaceCloud.RSfaceClientCloud import RSFace
 from RSFaceCloud.RSfaceOut import *
@@ -9,7 +9,7 @@ from RSFaceCloud.RSThread import *
 from RSFaceCloud.RSProcess import *
 from BasicMethod.BasicMethod import *
 from RSFaceCloud.RSConcurrentInput import *
-
+import datetime
 logging.basicConfig(format='%(asctime)s:%(levelname)s:%(message)s', level=logging.INFO)
 
 def PartitionSample(samefile,multiNum):
@@ -72,7 +72,7 @@ def MultiTest(multiNum,samefile,host,appid,appsecret,type = True):
                 data_statistics.dete.add(end.getDataStatistics().dete)
                 data_statistics.recogntion.add(end.getDataStatistics().recogntion)
         endTime = datetime.datetime.now()
-        multiTotalTime = float((endTime-startTime).microseconds*1./1000)
+        multiTotalTime = float((endTime-startTime).total_seconds()*1000)
 
         if type == True:
             #多进程模式读取中间数据
