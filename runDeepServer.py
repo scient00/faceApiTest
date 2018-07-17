@@ -63,7 +63,7 @@ def startUp(appId,runscript,ports,gpuType = 1,deviceId = 0):
 
         for index, port in enumerate(ports):
             cfgname = 'config/deepreadsense_' + str(port) + '.cfg'
-            if writeCfgFile(appId,port,gpuType =gpuType ,cfgname = cfgname) != 0:
+            if writeCfgFile(appId,port,gpuType =gpuType,deviceId = deviceId ,cfgname = cfgname) != 0:
                 return None
             command = './' + runscript + ' -c ' + cfgname
             result = os.popen(command).readlines()
