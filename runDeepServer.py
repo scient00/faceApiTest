@@ -4,7 +4,7 @@
 
 import os,sys,datetime,time
 
-port =[9087]
+port =[9087,9088]
 
 if len(sys.argv) <= 1:
     runscript = 'DeepFaceServer_20180708.bin'
@@ -56,7 +56,7 @@ def startUp(appId,runscript,ports,gpuType = 1):
     try:
 
         command = 'chmod a+x ' + runscript
-        if os.system (command) != 0:
+        if os.system(command) != 0:
             return None
 
         for index, port in enumerate(ports):
@@ -69,7 +69,7 @@ def startUp(appId,runscript,ports,gpuType = 1):
                 print('The startup files was not found!')
                 return None
             time.sleep(3)
-            command = 'ps -ef|grep ' + runscript
+            command = 'ps -ef|grep ' + cfgname
             result = os.popen(command).readlines()
             if len(result) == 0:
                 print(str(datetime.datetime.now())+': ' + '[port=%d] Service startup failed!' % port)
