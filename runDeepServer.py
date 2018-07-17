@@ -22,12 +22,13 @@ else:
         runType = int(sys.argv[2])
         if runType == 1:
             gpuType = int(sys.argv[3])
-            appId = sys.argv[4]
+            deviceId = int(sys.argv[4])
+            appId = sys.argv[5]
     except:
         print('参数不匹配！')
         sys.exit()
 
-def writeCfgFile(appId,port,gpuType = 1,cfgname ='config/deepreadsense.cfg' ):
+def writeCfgFile(appId,port,gpuType = 1,deviceId = 0,cfgname ='config/deepreadsense.cfg' ):
     try:
         fname = cfgname.split('/')[0]
         if not os.path.exists(fname):
@@ -36,7 +37,7 @@ def writeCfgFile(appId,port,gpuType = 1,cfgname ='config/deepreadsense.cfg' ):
         pidfile = 'pids/deepface_'+ str(port)+'.pid'
         port = port
         backend = gpuType  # 1: gpu 0: cpu
-        device_id = 0
+        device_id = deviceId
         daemon = 1
         with open(cfgname,'w') as file:
             file.write('app_id='+appId + '\n')
@@ -52,7 +53,7 @@ def writeCfgFile(appId,port,gpuType = 1,cfgname ='config/deepreadsense.cfg' ):
         print(str(datetime.datetime.now())+': ' + 'writeCfgFile error!')
         return -1
 
-def startUp(appId,runscript,ports,gpuType = 1):
+def startUp(appId,runscript,ports,gpuType = 1,deviceId = 0):
     try:
 
         command = 'chmod a+x ' + runscript
@@ -105,6 +106,6 @@ def killUp(runscript):
 
 if __name__ == '__main__':
     if runType == 1:
-        startUp(appId,runscript,port,gpuType)
+        startUp(appId,runscript,port,gpuType,deviceId)
     elif runType == 0:
         killUp(runscript)
