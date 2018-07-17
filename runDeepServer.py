@@ -10,6 +10,7 @@ if len(sys.argv) <= 1:
     runscript = 'DeepFaceServer_20180708.bin'
     runType = 1
     gpuType = 1
+    deviceId = 0
     appId = '0e4773c50dac1145d3d148da71555c31'
 else:
     try:
