@@ -4,7 +4,7 @@
 
 import os,sys,datetime,time
 
-port =[9087,9088,9099]
+port =[9081,9082,9087,9088,9099]
 
 if len(sys.argv) <= 1:
     runscript = 'DeepFaceServer_20180708.bin'
@@ -71,10 +71,18 @@ def startUp(appId,runscript,ports,gpuType = 1):
             time.sleep(10)
             command = 'ps -ef|grep ' + cfgname
             result = os.popen(command).readlines()
-            if len(result) == 0 or len(result) == 1:
-                print(str(datetime.datetime.now())+': ' + '[port=%d] Service startup failed!' % port)
+            if len(result) >0 :
+                judge = True
+                for value in result:
+                    if value.find(runscript) != -1:
+                        print(str(datetime.datetime.now()) + ': ' + '[port=%d] Service startup success!' % port)
+                        judge = False
+                        break
+
+                if judge == True:
+                    print(str(datetime.datetime.now()) + ': ' + '[port=%d] Service startup failed!' % port)
             else:
-                print(str(datetime.datetime.now()) + ': ' + '[port=%d] Service startup success!' % port )
+                print(str(datetime.datetime.now()) + ': ' + '[port=%d] Service startup failed!' % port)
 
     except:
        print(str(datetime.datetime.now())+': ' +'Service startup error!')
