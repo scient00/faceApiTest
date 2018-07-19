@@ -1,0 +1,17 @@
+SetItem,Value
+detect,1
+createPersonId,1
+createGroups,1
+addFaceId,1
+addPersonId,1
+identification,1
+verificationByfaceId,1
+verificationBypersonid,1
+imageIdentification,1
+removeFace,1
+deletePersonId,1
+deleteGroups,1
+emptyPerson,1
+emptyGroups,1
+removePerson,1
+

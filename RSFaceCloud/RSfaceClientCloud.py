@@ -1,10 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-import os
-import sys
-import json,requests
-import threading
+import os,sys,json,requests
 
 class RSFace(object):
     def __init__(self,http_url,api_id,api_secret):
@@ -27,11 +24,11 @@ class RSFace(object):
             files = { 'file': ('image.jpg',self.__file2ImageBuffer(filepath), 'image/jpeg')}
             repResult = requests.post(http_url_detect, data=data, files = files)
 
-            return repResult.json(),float(repResult.elapsed.microseconds)/1000
+            return repResult.json(),float(repResult.elapsed.microseconds)/1000,sys._getframe().f_code.co_name
         except:
             return None
 
-    def identification(self,face_id,group_id):
+    def identification(self,face_id,group_id,topNum = 5):
         '''
         # 识别face_id是谁，返回top5最相似的人
         :param face_id:
@@ -44,10 +41,11 @@ class RSFace(object):
                 'api_id': self.__api_id,
                 'api_secret': self.__api_secret,
                 'face_id': face_id,
-                'group_id': group_id
+                'group_id': group_id,
+                'top':topNum
             }
             repResult = requests.post(http_url_identification,data = data)
-            return repResult.json(),float(repResult.elapsed.microseconds)/1000
+            return repResult.json(),float(repResult.elapsed.microseconds)/1000,sys._getframe().f_code.co_name
         except:
             return None
 
@@ -58,7 +56,6 @@ class RSFace(object):
                 return data
         else:
             return 0
-
 
     def verificationByfaceId(self,face_id1,face_id2):
         '''
@@ -76,10 +73,9 @@ class RSFace(object):
                 'face_id2': face_id2
             }
             repResult = requests.post(http_url_verification,data = data)
-            return repResult.json(),float(repResult.elapsed.microseconds)/1000
+            return repResult.json(),float(repResult.elapsed.microseconds)/1000,sys._getframe().f_code.co_name
         except:
             return None
-
 
     def verificationBypersonid(self,face_id1,person_id):
         '''
@@ -97,10 +93,9 @@ class RSFace(object):
                 'person_id': person_id
             }
             repResult = requests.post(http_url_verification,data = data)
-            return repResult.json(),float(repResult.elapsed.microseconds)/1000
+            return repResult.json(),float(repResult.elapsed.microseconds)/1000,sys._getframe().f_code.co_name
         except:
             return None
-
 
     def imageIdentification(self,filepath,group_id):
         '''
@@ -118,10 +113,9 @@ class RSFace(object):
             }
             files = {'file': ('image.jpg', self.__file2ImageBuffer(filepath), 'image/jpeg')}
             repResult = requests.post(http_url_image_identication, data=data, files=files)
-            return repResult.json(),float(repResult.elapsed.microseconds)/1000
+            return repResult.json(),float(repResult.elapsed.microseconds)/1000,sys._getframe().f_code.co_name
         except:
             return None
-
 
     def createPersonId(self,face_id,name):
         '''
@@ -139,10 +133,9 @@ class RSFace(object):
                 'name': name
             }
             repResult = requests.post(http_url_image_createPersonId, data=data)
-            return repResult.json(),float(repResult.elapsed.microseconds)/1000
+            return repResult.json(),float(repResult.elapsed.microseconds)/1000,sys._getframe().f_code.co_name
         except:
             return None
-
 
     def deletePersonId(self,person_id):
         '''
@@ -158,10 +151,9 @@ class RSFace(object):
                 'person_id': person_id
             }
             repResult = requests.post(http_url_image_deletePersonId,data = data)
-            return repResult.json(),float(repResult.elapsed.microseconds)/1000
+            return repResult.json(),float(repResult.elapsed.microseconds)/1000,sys._getframe().f_code.co_name
         except:
             return None
-
 
     def addFaceId(self,face_id,person_id):
         '''
@@ -179,10 +171,9 @@ class RSFace(object):
                 'person_id': person_id
             }
             repResult = requests.post(http_url_add_face_id,data = data)
-            return repResult.json(),float(repResult.elapsed.microseconds)/1000
+            return repResult.json(),float(repResult.elapsed.microseconds)/1000,sys._getframe().f_code.co_name
         except:
             return None
-
 
     def emptyPerson(self,person_id):
         '''
@@ -198,10 +189,9 @@ class RSFace(object):
                 'person_id': person_id
             }
             repResult = requests.post(http_url_empty_person, data=data)
-            return repResult.json(),float(repResult.elapsed.microseconds)/1000
+            return repResult.json(),float(repResult.elapsed.microseconds)/1000,sys._getframe().f_code.co_name
         except:
             return None
-
 
     def removeFace(self,person_id,face_id):
         '''
@@ -219,10 +209,9 @@ class RSFace(object):
                 'face_id': face_id
             }
             repResult = requests.post(http_url_remove_face, data=data)
-            return repResult.json(),float(repResult.elapsed.microseconds)/1000
+            return repResult.json(),float(repResult.elapsed.microseconds)/1000,sys._getframe().f_code.co_name
         except:
             return None
-
 
     def createGroups(self,person_id,name):
         '''
@@ -240,10 +229,9 @@ class RSFace(object):
                 'name': name
             }
             repResult = requests.post(http_url_create_groups, data=data)
-            return repResult.json(),float(repResult.elapsed.microseconds)/1000
+            return repResult.json(),float(repResult.elapsed.microseconds)/1000,sys._getframe().f_code.co_name
         except:
             return None
-
 
     def deleteGroups(self,group_id):
         '''
@@ -259,10 +247,9 @@ class RSFace(object):
                 'group_id': group_id
             }
             repResult = requests.post(http_url_delete_groups, data=data)
-            return repResult.json(),float(repResult.elapsed.microseconds)/1000
+            return repResult.json(),float(repResult.elapsed.microseconds)/1000,sys._getframe().f_code.co_name
         except:
             return None
-
 
     def addPersonId(self,person_id,group_id):
         '''
@@ -280,10 +267,9 @@ class RSFace(object):
                 'group_id': group_id
             }
             repResult = requests.post(http_url_add_person, data=data)
-            return repResult.json(),float(repResult.elapsed.microseconds)/1000
+            return repResult.json(),float(repResult.elapsed.microseconds)/1000,sys._getframe().f_code.co_name
         except:
             return None
-
 
     def emptyGroups(self,group_id):
         '''
@@ -299,10 +285,9 @@ class RSFace(object):
                 'group_id': group_id
             }
             repResult = requests.post(http_url_empty_groups, data=data)
-            return repResult.json(),float(repResult.elapsed.microseconds)/1000
+            return repResult.json(),float(repResult.elapsed.microseconds)/1000,sys._getframe().f_code.co_name
         except:
             return None
-
 
     def removePerson(self, person_id, group_id):
         '''
@@ -320,7 +305,7 @@ class RSFace(object):
                 'group_id': group_id
             }
             repResult = requests.post(http_url_remove_person, data=data)
-            return repResult.json(),float(repResult.elapsed.microseconds)/1000
+            return repResult.json(),float(repResult.elapsed.microseconds)/1000,sys._getframe().f_code.co_name
         except:
             return None
 
